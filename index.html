@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0,
+          maximum-scale=1.0, user-scalable=no">
+
+    <title>MumShop</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="icon" type="image/png" href="icon.png">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+    <header class="top-header">
+        <div>
+            <h1>MumShop</h1>
+            <p id="currentDate"></p>
+        </div>
+
+        <button class="settings-icon"
+                onclick="showPage('settings')">
+            ⚙️
+        </button>
+    </header>
+
+
+    <!-- ================= HOME ================= -->
+    <section id="home" class="page active">
+
+        <div class="welcome">
+            <h2>Good day 👋</h2>
+            <p>Here's how your shop is doing today.</p>
+        </div>
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <span>💰</span>
+                <p>Today's Sales</p>
+                <h2 id="todaySales">KSh 0</h2>
+            </div>
+
+            <div class="stat-card">
+                <span>📈</span>
+                <p>Today's Profit</p>
+                <h2 id="todayProfit">KSh 0</h2>
+            </div>
+
+            <div class="stat-card">
+                <span>🧾</span>
+                <p>Transactions</p>
+                <h2 id="todayTransactions">0</h2>
+            </div>
+
+            <div class="stat-card">
+                <span>⚠️</span>
+                <p>Low Stock</p>
+                <h2 id="lowStockCount">0</h2>
+            </div>
+
+        </div>
+
+
+        <div class="section-header">
+            <h2>Quick Actions</h2>
+        </div>
+
+        <div class="quick-actions">
+
+            <button onclick="showPage('sell')">
+                <span>🛒</span>
+                <strong>Sell</strong>
+            </button>
+
+            <button onclick="openProductForm()">
+                <span>➕</span>
+                <strong>Add Stock</strong>
+            </button>
+
+            <button onclick="showPage('history')">
+                <span>🧾</span>
+                <strong>Sales</strong>
+            </button>
+
+            <button onclick="showPage('reports')">
+                <span>📊</span>
+                <strong>Reports</strong>
+            </button>
+
+        </div>
+
+
+        <div class="section-header">
+            <h2>Low Stock</h2>
+        </div>
+
+        <div id="lowStockList">
+            <div class="empty-state">
+                No low-stock products 🎉
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- ================= SELL ================= -->
+    <section id="sell" class="page">
+
+        <div class="section-header">
+            <div>
+                <h2>Sell Products</h2>
+                <p>Select a product to add it to the cart.</p>
+            </div>
+        </div>
+
+        <div class="search-box">
+            🔍
+            <input
+                type="text"
+                id="productSearch"
+                placeholder="Search products..."
+                oninput="displayProductsForSale()">
+        </div>
+
+        <div id="saleProducts"></div>
+
+
+        <!-- CART -->
+        <div class="cart-section">
+
+            <div class="section-header">
+                <h2>Cart</h2>
+
+                <button class="small-clear"
+                        onclick="clearCart()">
+                    Clear
+                </button>
+            </div>
+
+            <div id="cartItems">
+                <div class="empty-state">
+                    Your cart is empty 🛒
+                </div>
+            </div>
+
+            <div class="cart-total">
+                <span>Total</span>
+                <strong id="cartTotal">KSh 0</strong>
+            </div>
+
+            <button class="checkout-btn"
+                    onclick="openCheckout()">
+                Proceed to Checkout
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= PRODUCTS ================= -->
+    <section id="products" class="page">
+
+        <div class="section-header">
+            <div>
+                <h2>Stock</h2>
+                <p>Manage your products.</p>
+            </div>
+
+            <button class="add-btn"
+                    onclick="openProductForm()">
+                + Add
+            </button>
+        </div>
+
+        <div class="search-box">
+            🔍
+            <input
+                type="text"
+                id="stockSearch"
+                placeholder="Search stock..."
+                oninput="displayProducts()">
+        </div>
+
+        <div id="productList"></div>
+
+    </section>
+
+
+    <!-- ================= HISTORY ================= -->
+    <section id="history" class="page">
+
+        <div class="section-header">
+            <div>
+                <h2>Sales History</h2>
+                <p>Your previous transactions.</p>
+            </div>
+        </div>
+
+        <div id="salesHistory"></div>
+
+    </section>
+
+
+    <!-- ================= REPORTS ================= -->
+    <section id="reports" class="page">
+
+        <div class="section-header">
+            <div>
+                <h2>Reports</h2>
+                <p>Shop performance.</p>
+            </div>
+        </div>
+
+
+        <div class="report-card">
+            <div>
+                <span>💰</span>
+                <p>Total Sales</p>
+            </div>
+
+            <strong id="reportSales">
+                KSh 0
+            </strong>
+        </div>
+
+
+        <div class="report-card">
+            <div>
+                <span>📈</span>
+                <p>Total Profit</p>
+            </div>
+
+            <strong id="reportProfit">
+                KSh 0
+            </strong>
+        </div>
+
+
+        <div class="report-card">
+            <div>
+                <span>💵</span>
+                <p>Cash Sales</p>
+            </div>
+
+            <strong id="reportCash">
+                KSh 0
+            </strong>
+        </div>
+
+
+        <div class="report-card">
+            <div>
+                <span>📱</span>
+                <p>M-Pesa Sales</p>
+            </div>
+
+            <strong id="reportMpesa">
+                KSh 0
+            </strong>
+        </div>
+
+
+        <div class="report-card">
+            <div>
+                <span>🧾</span>
+                <p>Total Transactions</p>
+            </div>
+
+            <strong id="reportTransactions">
+                0
+            </strong>
+        </div>
+
+    </section>
+
+
+    <!-- ================= SETTINGS ================= -->
+    <section id="settings" class="page">
+
+        <div class="section-header">
+            <div>
+                <h2>Settings</h2>
+                <p>Manage your MumShop app.</p>
+            </div>
+        </div>
+
+
+        <div class="settings-card">
+            <div class="settings-icon-large">
+                🏪
+            </div>
+
+            <div>
+                <h3>MumShop</h3>
+                <p>Simple shop management system.</p>
+            </div>
+        </div>
+
+
+        <div class="danger-card">
+
+            <div>
+                <h3>🗑️ Reset Shop</h3>
+
+                <p>
+                    Delete all products, stock, sales and
+                    transaction history.
+                </p>
+            </div>
+
+            <button class="danger-btn"
+                    onclick="resetShop()">
+                Reset Everything
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= PRODUCT MODAL ================= -->
+    <div id="productModal" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h2 id="productModalTitle">
+                    Add Product
+                </h2>
+
+                <button onclick="closeProductForm()">
+                    ✕
+                </button>
+            </div>
+
+
+            <input type="hidden" id="productId">
+
+
+            <label>
+                Product Name
+            </label>
+
+            <input
+                type="text"
+                id="productName"
+                placeholder="e.g. Bread">
+
+
+            <label>
+                Buying Price
+            </label>
+
+            <input
+                type="number"
+                id="buyingPrice"
+                placeholder="e.g. 50"
+                min="0">
+
+
+            <label>
+                Selling Price
+            </label>
+
+            <input
+                type="number"
+                id="sellingPrice"
+                placeholder="e.g. 70"
+                min="0">
+
+
+            <label>
+                Stock Quantity
+            </label>
+
+            <input
+                type="number"
+                id="stockQuantity"
+                placeholder="e.g. 20"
+                min="0">
+
+
+            <button class="primary-btn"
+                    onclick="saveProduct()">
+                Save Product
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= CHECKOUT MODAL ================= -->
+    <div id="checkoutModal" class="modal">
+
+        <div class="modal-content checkout">
+
+            <div class="modal-header">
+
+                <h2>Checkout</h2>
+
+                <button onclick="closeCheckout()">
+                    ✕
+                </button>
+
+            </div>
+
+
+            <div class="checkout-total">
+                <span>Total</span>
+
+                <strong id="checkoutTotal">
+                    KSh 0
+                </strong>
+            </div>
+
+
+            <label>
+                Payment Method
+            </label>
+
+            <div class="payment-methods">
+
+                <button id="cashBtn"
+                        class="payment-btn selected"
+                        onclick="selectPayment('Cash')">
+                    💵 Cash
+                </button>
+
+                <button id="mpesaBtn"
+                        class="payment-btn"
+                        onclick="selectPayment('M-Pesa')">
+                    📱 M-Pesa
+                </button>
+
+            </div>
+
+
+            <label>
+                Amount Received
+            </label>
+
+            <input
+                type="number"
+                id="amountReceived"
+                placeholder="Enter amount"
+                min="0"
+                oninput="calculateChange()">
+
+
+            <div class="change-box">
+
+                <span>Change</span>
+
+                <strong id="changeAmount">
+                    KSh 0
+                </strong>
+
+            </div>
+
+
+            <button class="checkout-btn"
+                    onclick="completeSale()">
+                Complete Sale
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= BOTTOM NAV ================= -->
+    <nav class="bottom-nav">
+
+        <button onclick="showPage('home')">
+            <span>🏠</span>
+            <small>Home</small>
+        </button>
+
+        <button onclick="showPage('sell')">
+            <span>🛒</span>
+            <small>Sell</small>
+        </button>
+
+        <button onclick="showPage('products')">
+            <span>📦</span>
+            <small>Stock</small>
+        </button>
+
+        <button onclick="showPage('history')">
+            <span>🧾</span>
+            <small>Sales</small>
+        </button>
+
+        <button onclick="showPage('reports')">
+            <span>📊</span>
+            <small>Reports</small>
+        </button>
+
+    </nav>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+          </html>
