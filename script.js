@@ -1166,3 +1166,42 @@ if ("serviceWorker" in navigator) {
             });
     });
 }
+function resetShop() {
+    const confirmed = confirm(
+        "⚠️ RESET SHOP?\n\n" +
+        "This will permanently delete:\n" +
+        "• All products and stock\n" +
+        "• All sales\n" +
+        "• All transaction history\n" +
+        "• All dashboard records\n\n" +
+        "This cannot be undone.\n\n" +
+        "Are you sure?"
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    // Clear all shop data
+    localStorage.removeItem("products");
+    localStorage.removeItem("sales");
+
+    // Reset app variables
+    products = [];
+    sales = [];
+    cart = [];
+
+    // Refresh the app
+    displayProducts();
+    displayProductsForSale();
+    displayCart();
+    updateDashboard();
+    displayLowStock();
+    displaySalesHistory();
+    updateReports();
+
+    alert("✅ Shop has been reset successfully.");
+    
+    // Return to Home
+    showPage("home");
+}
