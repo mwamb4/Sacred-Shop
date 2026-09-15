@@ -1153,3 +1153,16 @@ function formatMoney(number) {
 
     return Number(number).toLocaleString("en-KE");
           }
+// Register service worker
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker
+            .register("./service-worker.js")
+            .then(() => {
+                console.log("MumShop is ready for offline use.");
+            })
+            .catch(error => {
+                console.error("Service Worker registration failed:", error);
+            });
+    });
+}
