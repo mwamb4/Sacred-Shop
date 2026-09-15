@@ -1,0 +1,24 @@
+{
+    "name": "MumShop",
+    "short_name": "MumShop",
+    "description": "Simple shop management and POS app",
+    "start_url": "./index.html",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#f5f7fb",
+    "theme_color": "#2563eb",
+    "orientation": "portrait",
+
+    "icons": [
+        {
+            "src": "icon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
