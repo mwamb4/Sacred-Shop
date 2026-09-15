@@ -454,3 +454,33 @@ button {
     }
 
 }
+.danger-card {
+    border: 1px solid #ffcccc;
+}
+
+.danger-card h3 {
+    margin-bottom: 8px;
+}
+
+.danger-card p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.danger-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #d32f2f;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.danger-btn:active {
+    transform: scale(0.98);
+}
